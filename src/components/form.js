@@ -37,6 +37,8 @@ const cities = [
 ].map((x) => ({value: x, label: x}));
 
 export default class Form extends Component {
+    fileInput = null;
+
     constructor(props) {
         super(props);
 
@@ -45,6 +47,21 @@ export default class Form extends Component {
             descriptionValid: true,
             numberValid: true
         }
+    }
+
+    componentWillReceiveProps(nextProps, prevState){
+
+        if (nextProps.obj && nextProps.obj.image && nextProps.obj.image.length === 0) {
+            const canvas = document.getElementById('canvas');
+            if (canvas)
+                canvas.height = 0;
+        } else {
+            if (nextProps.obj && nextProps.obj.image)
+                this.changeImage(nextProps.obj.image)
+        }
+
+
+        return true;
     }
 
     checkValid(field){
@@ -68,6 +85,10 @@ export default class Form extends Component {
         this.props.onCityChange && this.props.onCityChange(e);
     }
 
+    onFileChange(e){
+        this.getBase64(e.target.files[0])
+    }
+
     onSubmit(e) {
         e.preventDefault();
 
@@ -86,6 +107,31 @@ export default class Form extends Component {
 
         if (numberValid * descriptionValid * numberValid)
             this.props.onSubmit && this.props.onSubmit();
+
+        const canvas = document.getElementById('canvas');
+        canvas.height = 0;
+        this.fileInput.value = null;
+    }
+
+    getBase64(file) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            this.changeImage(reader.result);
+            this.props.onImageChange && this.props.onImageChange(reader.result)
+        };
+    }
+
+    changeImage(image){
+        const img = new Image();
+        img.onload = function(){
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext("2d");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img,0,0);
+        };
+        img.src = image;
     }
 
     render() {
@@ -133,7 +179,17 @@ export default class Form extends Component {
                     />
                 </div>
                 <div className="form-group">
-                    <input type="submit" value="Создать" className="btn btn-primary"/>
+                    <canvas id="canvas" height="0"/>
+                    <input ref={(e) => this.fileInput = e}
+                           type="file"
+                           accept="image/*"
+                           className="form-control"
+                           onChange={(e) => this.onFileChange(e)}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <input type="submit" value={this.props.action || "Сохранить"} className="btn btn-primary"/>
                 </div>
             </form>
         )

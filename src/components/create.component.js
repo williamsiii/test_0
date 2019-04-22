@@ -10,7 +10,8 @@ export default class Create extends Component {
             title: '',
             description: '',
             number: '',
-            city: ''
+            city: '',
+            image: ''
         }
     }
 
@@ -38,6 +39,12 @@ export default class Create extends Component {
         })
     }
 
+    onImageChange(e) {
+        this.setState({
+            image: e
+        })
+    }
+
     onSubmit() {
         let ads = localStorage.getItem('ads') ? JSON.parse(localStorage.getItem('ads')) : {ads:[]};
         const newAd = {
@@ -45,7 +52,8 @@ export default class Create extends Component {
             title: this.state.title,
             description: this.state.description,
             number: this.state.number,
-            city: this.state.city
+            city: this.state.city,
+            image: this.state.image
         };
         ads.ads.push(newAd);
         localStorage.setItem('ads', JSON.stringify(ads));
@@ -53,7 +61,8 @@ export default class Create extends Component {
             title: '',
             description: '',
             number: '',
-            city: ''
+            city: '',
+            image: ''
         })
     }
 
@@ -64,11 +73,13 @@ export default class Create extends Component {
                 <Form
                     style={{marginTop: 10}}
                     obj={this.state}
+                    action="Создать"
                     onSubmit={(e) => this.onSubmit(e)}
                     onChangeTitle={(e) => this.onChangeTitle(e)}
                     onChangeDescription={(e) => this.onChangeDescription(e)}
                     onChangeNumber={(e) => this.onChangeNumber(e)}
                     onCityChange={(e) => this.onCityChange(e)}
+                    onImageChange={(e) => this.onImageChange(e)}
                  />
             </div>
         )

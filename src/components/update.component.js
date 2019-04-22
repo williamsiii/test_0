@@ -12,7 +12,8 @@ export default class Update extends Component {
             title: '',
             description: '',
             number:'',
-            city: ''
+            city: '',
+            image: ''
         }
     }
 
@@ -26,8 +27,9 @@ export default class Update extends Component {
                 title: ad.title,
                 description: ad.description,
                 number: ad.number,
-                city: ad.city});
-
+                city: ad.city,
+                image: ad.image
+            });
         } catch(err){
             throw Error(err);
         }
@@ -57,6 +59,12 @@ export default class Update extends Component {
         })
     }
 
+    onImageChange(e) {
+        this.setState({
+            image: e
+        })
+    }
+
     onSubmit() {
         this.ads.ads = this.ads.ads.map((x) => {
             return x.id === this.id ?
@@ -65,7 +73,8 @@ export default class Update extends Component {
                     title: this.state.title,
                     description: this.state.description,
                     number: this.state.number,
-                    city: this.state.city
+                    city: this.state.city,
+                    image: this.state.image
                 } : x;
         });
         const ads = JSON.stringify(this.ads);
@@ -86,6 +95,7 @@ export default class Update extends Component {
                     onChangeDescription={(e) => this.onChangeDescription(e)}
                     onChangeNumber={(e) => this.onChangeNumber(e)}
                     onCityChange={(e) => this.onCityChange(e)}
+                    onImageChange={(e) => this.onImageChange(e)}
                 />
             </div>
         )
