@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Form from "./form";
 
 export default class Create extends Component {
 
@@ -33,8 +34,7 @@ export default class Create extends Component {
         })
     }
 
-    onSubmit(e) {
-        e.preventDefault();
+    onSubmit() {
         let ads = localStorage.getItem('ads') ? JSON.parse(localStorage.getItem('ads')) : {ads:[]};
         const newAd = {id: ads.ads.length, title: this.state.title, description: this.state.description, number: this.state.number};
         ads.ads.push(newAd);
@@ -48,40 +48,16 @@ export default class Create extends Component {
 
     render() {
         return (
-            <div style={{marginTop: 10}}>
+            <div >
                 <h3>Создать объявление</h3>
-                <form onSubmit={(e) => this.onSubmit(e)}>
-                    <div className="form-group">
-                        <label>Название:  </label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            value={this.state.title}
-                            maxLength={100}
-                            onChange={(e) => this.onChangeTitle(e)}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Описание: </label>
-                        <input type="text"
-                               className="form-control"
-                               value={this.state.description}
-                               maxLength={300}
-                               onChange={(e) => this.onChangeDescription(e)}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Номер телефона: </label>
-                        <input type="text"
-                               className="form-control"
-                               value={this.state.number}
-                               onChange={(e) => this.onChangeNumber(e)}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input type="submit" value="Создать" className="btn btn-primary"/>
-                    </div>
-                </form>
+                <Form
+                    style={{marginTop: 10}}
+                    obj={this.state}
+                    onSubmit={(e) => this.onSubmit(e)}
+                    onChangeTitle={(e) => this.onChangeTitle(e)}
+                    onChangeDescription={(e) => this.onChangeDescription(e)}
+                    onChangeNumber={(e) => this.onChangeNumber(e)}
+                 />
             </div>
         )
     }

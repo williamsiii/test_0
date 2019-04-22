@@ -36,7 +36,7 @@ export default class Read extends Component {
     render() {
         return (
             <div>
-                <h3 align="center">Список объявлений</h3>
+                <h3 align="left">Список объявлений</h3>
                 <table className="table table-striped" style={{ marginTop: 20 }}>
                     <thead>
                     <tr>
