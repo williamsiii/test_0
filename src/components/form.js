@@ -1,7 +1,42 @@
 import React, { Component } from 'react';
+const Select = require('react-select').default;
+
+const cities = [
+    '',
+    "Абакан",
+    "Азов",
+    "Александров",
+    "Алексин",
+    "Альметьевск",
+    "Анапа",
+    "Ангарск",
+    "Анжеро-Судженск",
+    "Апатиты",
+    "Арзамас",
+    "Армавир",
+    "Арсеньев",
+    "Артем",
+    "Архангельск",
+    "Асбест",
+    "Астрахань",
+    "Ачинск",
+    "Балаково",
+    "Балахна",
+    "Балашиха",
+    "Балашов",
+    "Барнаул",
+    "Батайск",
+    "Белгород",
+    "Белебей",
+    "Белово",
+    "Белогорск (Амурская область)",
+    "Белорецк",
+    "Белореченск",
+    "Бердск",
+    "Березники"
+].map((x) => ({value: x, label: x}));
 
 export default class Form extends Component {
-
     constructor(props) {
         super(props);
 
@@ -27,6 +62,10 @@ export default class Form extends Component {
 
     onChangeNumber(e) {
         this.props.onChangeNumber && this.props.onChangeNumber(e);
+    }
+
+    onCityChange(e){
+        this.props.onCityChange && this.props.onCityChange(e);
     }
 
     onSubmit(e) {
@@ -79,11 +118,19 @@ export default class Form extends Component {
                     <label>Номер телефона: </label>
                     <input type="text"
                            className="form-control"
-                           placeholder={"+7(999)999-11-11"}
+                           placeholder={"+7(999)999-99-99"}
                            value={this.props.obj.number}
                            onChange={(e) => this.onChangeNumber(e)}
                     />
                     <div className={this.checkValid('numberValid')}>Обязательно для заполнения. Формат ввода: +7(999)999-99-99</div>
+                </div>
+                <div className="form-group">
+                    <Select
+                        value={this.props.obj.city}
+                        placeholder={this.props.obj.city || "Выберите город"}
+                        onChange={(e) =>  this.onCityChange(e)}
+                        options={cities}
+                    />
                 </div>
                 <div className="form-group">
                     <input type="submit" value="Создать" className="btn btn-primary"/>

@@ -43,6 +43,7 @@ export default class Read extends Component {
                         <th>Название</th>
                         <th>Описание</th>
                         <th>Телефон</th>
+                        <th>Город</th>
                         <th colSpan="2">Действие</th>
                     </tr>
                     </thead>

@@ -11,7 +11,8 @@ export default class Update extends Component {
             id: 0,
             title: '',
             description: '',
-            number:''
+            number:'',
+            city: ''
         }
     }
 
@@ -24,7 +25,8 @@ export default class Update extends Component {
                 id: this.id,
                 title: ad.title,
                 description: ad.description,
-                number: ad.number });
+                number: ad.number,
+                city: ad.city});
 
         } catch(err){
             throw Error(err);
@@ -49,10 +51,22 @@ export default class Update extends Component {
         })
     }
 
+    onCityChange(e) {
+        this.setState({
+            city: e.value
+        })
+    }
+
     onSubmit() {
         this.ads.ads = this.ads.ads.map((x) => {
             return x.id === this.id ?
-                {id: x.id, title: this.state.title, description: this.state.description, number: this.state.number} : x;
+                {
+                    id: x.id,
+                    title: this.state.title,
+                    description: this.state.description,
+                    number: this.state.number,
+                    city: this.state.city
+                } : x;
         });
         const ads = JSON.stringify(this.ads);
         localStorage.setItem('ads', ads);
@@ -71,6 +85,7 @@ export default class Update extends Component {
                     onChangeTitle={(e) => this.onChangeTitle(e)}
                     onChangeDescription={(e) => this.onChangeDescription(e)}
                     onChangeNumber={(e) => this.onChangeNumber(e)}
+                    onCityChange={(e) => this.onCityChange(e)}
                 />
             </div>
         )

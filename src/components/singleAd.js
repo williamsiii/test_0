@@ -18,6 +18,9 @@ class SingleAd extends Component {
                     {this.props.obj.number}
                 </td>
                 <td>
+                    {this.props.obj.city}
+                </td>
+                <td>
                     <Link to={"/update/"+this.props.obj.id} className="btn btn-primary">Редактировать</Link>
                 </td>
                 <td>

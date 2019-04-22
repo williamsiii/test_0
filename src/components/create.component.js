@@ -8,11 +8,9 @@ export default class Create extends Component {
 
         this.state = {
             title: '',
-            titleValid: true,
             description: '',
-            descriptionValid: true,
             number: '',
-            numberValid: true
+            city: ''
         }
     }
 
@@ -34,15 +32,28 @@ export default class Create extends Component {
         })
     }
 
+    onCityChange(e) {
+        this.setState({
+            city: e.value
+        })
+    }
+
     onSubmit() {
         let ads = localStorage.getItem('ads') ? JSON.parse(localStorage.getItem('ads')) : {ads:[]};
-        const newAd = {id: ads.ads.length, title: this.state.title, description: this.state.description, number: this.state.number};
+        const newAd = {
+            id: ads.ads.length,
+            title: this.state.title,
+            description: this.state.description,
+            number: this.state.number,
+            city: this.state.city
+        };
         ads.ads.push(newAd);
         localStorage.setItem('ads', JSON.stringify(ads));
         this.setState({
             title: '',
             description: '',
-            number: ''
+            number: '',
+            city: ''
         })
     }
 
@@ -57,6 +68,7 @@ export default class Create extends Component {
                     onChangeTitle={(e) => this.onChangeTitle(e)}
                     onChangeDescription={(e) => this.onChangeDescription(e)}
                     onChangeNumber={(e) => this.onChangeNumber(e)}
+                    onCityChange={(e) => this.onCityChange(e)}
                  />
             </div>
         )
